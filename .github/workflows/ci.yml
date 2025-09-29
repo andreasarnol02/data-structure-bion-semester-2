@@ -28,30 +28,30 @@ jobs:
       run: |
         echo "🔨 Compiling Java files..."
         
-        # Find all directories containing Java files
-        java_dirs=$(find . -name "*.java" -exec dirname {} \; | sort -u)
-        
-        if [ -z "$java_dirs" ]; then
-          echo "⚠️ No Java files found in the repository"
-          exit 1
-        fi
-        
-        # Compile Java files in each directory
-        for dir in $java_dirs; do
+        # Find all directories containing Java files and handle spaces properly
+        find . -name "*.java" -exec dirname {} \; | sort -u | while IFS= read -r dir; do
           echo "📁 Processing directory: $dir"
           if [ -n "$(find "$dir" -maxdepth 1 -name "*.java")" ]; then
             echo "Compiling Java files in: $dir"
-            cd "$dir"
+            # Use pushd/popd to handle directories with spaces
+            pushd "$dir" > /dev/null
             javac *.java
             if [ $? -eq 0 ]; then
               echo "✅ Successfully compiled Java files in: $dir"
             else
               echo "❌ Failed to compile Java files in: $dir"
+              popd > /dev/null
               exit 1
             fi
-            cd - > /dev/null
+            popd > /dev/null
           fi
         done
+        
+        # Check if any Java files were found
+        if [ -z "$(find . -name "*.java")" ]; then
+          echo "⚠️ No Java files found in the repository"
+          exit 1
+        fi
     
     # Clean up compiled files
     - name: Cleanup
