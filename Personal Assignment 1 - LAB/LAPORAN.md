@@ -1,5 +1,7 @@
 ## 1. Penjelasan Metode yang Digunakan
 
+> **Source Code**: [https://github.com/andreasarnol02/data-structure-bion-semester-2/tree/main/Personal%20Assignment%201%20-%20LAB](https://github.com/andreasarnol02/data-structure-bion-semester-2/tree/main/Personal%20Assignment%201%20-%20LAB)
+
 ### 1.1 Metodologi Penelitian
 
 Penelitian ini menggunakan pendekatan eksperimental untuk membandingkan performa antara struktur data Array dan ArrayList dalam bahasa Java. Pengukuran dilakukan menggunakan `System.nanoTime()` untuk mendapatkan akurasi waktu eksekusi dalam satuan nanodetik.
